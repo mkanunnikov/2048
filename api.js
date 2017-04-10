@@ -56,6 +56,10 @@ class Row {
         });
     }
 
+    up(){}
+    
+    down(){}
+
     first() {
         return this.cells.find(cell => cell.value > 0);
     }
@@ -82,54 +86,55 @@ class Row {
 class Field {
     constructor(size) {
         // this.columns = Array(size);
-        this.rows = Array(size);
+        this.rows = [];
 
         for (let columnIndex = 0; columnIndex < size; columnIndex++) {
-            let row = new Row();
+            let row = [];
             for (let rowIndex = 0; rowIndex < size; rowIndex++) {
-                // this.cells[column][row] = new Cell(column,row);
-                let cell = new Cell(columnIndex, rowIndex);
-                console.log(`new cell value = ${cell.value}`);
-                row.put(cell);
-                // this.columns[columnIndex] =
+                row.push(new Cell(columnIndex, rowIndex));
             }
-            this.rows.push(row);
-            console.log(row);
+            
+      //      console.log(...row);
+            this.rows.push(new Row(row));
         }
+        this.random();
     }
 
     left() {
         this.rows.forEach((row)=>row.left());
+        return this.random();
     }
 
     right(){
         this.rows.forEach((row)=>row.right());
+        return this.random();
     }
 
     up(){
         this.rows.forEach((row)=>row.up());
+        return this.random();
     }
 
     down(){
         this.rows.forEach((row)=>row.down());
+        return this.random();
+    }
+
+    random(){
+        let zeroCells = this.rows.reduce((all,row)=>{return all.concat(row.cells.filter(cell=>cell.value===0))},[]);
+        if(zeroCells.length>0){
+           let randomIndex = Math.random()*(zeroCells.length-1);
+           let fixedIndex = randomIndex.toFixed();
+           zeroCells[fixedIndex].value = 2;
+        }
+        return zeroCells.length>0;
     }
 }
 
+/*
 let init = function (size) {
     console.log('Start');
-    this.field = new Field(size);
-
-    // let row = new Row([0, 4, 2, 4, 0, 0, 2, 2, 2, 0, 0, 4, 4, 2, 0, 2].map(
-    //     (value, column) => {
-    //         return new Cell(column, 0, value);
-    //     }
-    // ));
-    console.log(this.field.rows[0].toString());
-    // row.right();
-    // console.log(row.toString());
-
+    let field = new Field(size);
+    return field;
 };
-
-let left = function () {
-    this.field.left();
-};
+*/
