@@ -45,7 +45,7 @@ function refresh() {
 		//console.log(row);
 		for(cell of row.cells){
 			//console.log(cell);
-	    	document.getElementsByName("row")[cell.row].children[cell.column].innerHTML = cell.value;
+	    	document.getElementsByName("row")[cell.column].children[cell.row].innerHTML = cell.value;
 	    }
 	}
 }

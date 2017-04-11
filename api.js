@@ -27,10 +27,6 @@ class Row {
     }
 
     left() {
-        (new Row(...this.cells.reverse())).right();
-    }
-
-    right() {
         const newValues = this.cells.map(() => {
             let value = 0;
             const firstCell = this.first();
@@ -50,10 +46,16 @@ class Row {
             // console.log(`value = ${value}`);
             return value;
         });
-        // console.log(...newValues);
+        //console.log(...newValues);
         this.cells.forEach((cell, index) => {
             cell.value = newValues[index];
         });
+    }
+
+    right() {
+        console.log(this.cells);
+        let row = new Row(...(this.cells.reverse()));
+        row.right();
     }
 
     up(){}
